@@ -17,8 +17,13 @@ double beta[4] = {
     0.173927
 };
 
-const double a = 3.14 / 2;
-const double b = 3.14 / 2;
+const double a = 0;
+const double b = 3.1415926535897 / 2;
+
+double my_function(double x)
+{
+    return sin(x);
+}
 
 int main()
 {
@@ -28,7 +33,7 @@ int main()
     {
         double x = a + (b - a) * alpa[i];
 
-        answer += beta[i] * sin(x);
+        answer += beta[i] * my_function(x);
     }
 
     answer *= b - a;
