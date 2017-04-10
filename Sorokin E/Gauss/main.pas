@@ -1,4 +1,4 @@
-Program HelloWorld(output);
+Program Gauss4Node(output);
 var a, b, x, answer: real;
 var i: integer;
 var beta: array [1..4] of real = (
