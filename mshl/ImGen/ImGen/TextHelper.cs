@@ -1,4 +1,4 @@
-﻿namespace Aviators.Bot
+﻿namespace ImGen
 {
     public class TextHelper
     {

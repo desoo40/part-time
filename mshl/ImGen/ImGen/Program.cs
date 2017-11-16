@@ -21,16 +21,21 @@ namespace ImGen
 
         private static void DefType(string path)
         {
-            var l = File.ReadAllLines(path).ToList();
+            var l = File.ReadAllLines(path);
 
-            if (l[0].ToLower() == "результаты")
+            if (l[0].ToLower() == "игры")
             {
-                Game g = new Game(l);
+                Game g = new Game(l, 1);
+                g.SaveImage();
+                for (int i = 2; i < l.Length; i++)
+                {
+                    if (l[i] == "*" && ++i < l.Length)
+                    {
+                      g = new Game(l, 1);
 
-                MakeImage(g);
+                    }
 
-
-
+                }
             }
         }
 

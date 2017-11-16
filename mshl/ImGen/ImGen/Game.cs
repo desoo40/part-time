@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,24 +12,228 @@ namespace ImGen
 {
     class Game
     {
-        public string Division = "";
-        public string HomeTeam = "";
-        public string AwayTeam = "";
-        public string ScorePeriods = "";
-        public string Score = "";
+        public TextInImg Division { get; set; }
+        public TextInImg HomeTeam { get; set; }
+        public ImgInImg HomeTeamLogo { get; set; }
+        public ImgInImg AwayTeamLogo { get; set; }
+        public TextInImg AwayTeam { get; set; }
+        public TextInImg ScorePeriods { get; set; }
+        public TextInImg Score { get; set; }
+        public TextInImg Date { get; set; }
 
-        public Game(List<string> list)
+        public ImgInImg MshlLogo { get; set; }
+        public TextInImg HomeLower { get; set; }
+        public TextInImg AwayLower { get; set; }
+        public TextInImg Mshl { get; set; }
+
+
+
+        public Game(string[] l, int i)
         {
-            Division = list[1];
-            list[2] = list[2].Replace(" ", "");
-
-            var s = list[2].Split('-');
-            HomeTeam = s[0];
-            AwayTeam = s[1];
-            ScorePeriods = list[3];
-            Score = list[4];
+            FillSheet("sheets\\game.txt");
+            FillData(l, i);
         }
 
+        private void FillData(string[] lines, int i)
+        {
+            while (lines[i] != "*")
+            {
+                if (lines[i] == "Дивизион")
+                    Division.Text = lines[++i].ToUpper(); 
 
+                if (lines[i] == "Команды")
+                {
+                    
+                    var teams = lines[++i].Replace(" ", "").Split('-');
+
+                    HomeTeam.Text = teams[0].ToUpper();
+                    AwayTeam.Text = teams[1].ToUpper();
+                    HomeTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[0].ToLower()}.png");
+                    AwayTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[1].ToLower()}.png");
+                    MshlLogo.Image = Image.FromFile("images\\logos\\мсхл.png");
+
+                }
+
+                if (lines[i] == "Периоды")
+                    ScorePeriods.Text = lines[++i].ToUpper(); 
+
+                if (lines[i] == "Счет")
+                    Score.Text = lines[++i].ToUpper(); 
+
+                if (lines[i] == "Дата")
+                    Date.Text = lines[++i].ToUpper(); 
+
+                ++i;
+            }
+        }
+
+        private void FillSheet(string sheetsGameTxt)
+        {
+            var sheetList = File.ReadAllLines(sheetsGameTxt);
+
+            if (sheetList.Length == 0)
+            {
+                Console.WriteLine(@"ERROR(файл не содержит строк)");
+                return;
+            }
+
+            for (int i = 0; i < sheetList.Length; i++)
+            {
+                if (sheetList[i] == "Images")
+                    i = FillImages(sheetList, ++i);
+
+                if (sheetList[i] == "Texts")
+                    i = FillTexts(sheetList, ++i);
+            }
+
+
+
+        }
+        private int FillTexts(string[] lines, int i)
+        {
+            while (lines[i] != "+")
+            {
+                if (lines[i] == "Division")
+                    Division = new TextInImg(lines, ++i);
+
+                if (lines[i] == "Date")
+                    Date = new TextInImg(lines, ++i);
+
+                if (lines[i] == "ScorePeriods")
+                    ScorePeriods = new TextInImg(lines, ++i);
+
+                if (lines[i] == "Score")
+                    Score = new TextInImg(lines, ++i);
+
+                if (lines[i] == "HomeTeam")
+                    HomeTeam = new TextInImg(lines, ++i);
+
+                if (lines[i] == "AwayTeam")
+                    AwayTeam = new TextInImg(lines, ++i);
+
+                if (lines[i] == "HomeLower")
+                    HomeLower = new TextInImg(lines, ++i);
+
+                if (lines[i] == "AwayLower")
+                    AwayLower = new TextInImg(lines, ++i);
+
+                if (lines[i] == "Mshl")
+                    Mshl = new TextInImg(lines, ++i);
+
+                ++i;
+            }
+            return i;
+        }
+
+        private int FillImages(string[] lines, int i)
+        {
+            while (lines[i] != "+")
+            {
+                if (lines[i] == "HomeTeamLogo")
+                    HomeTeamLogo = new ImgInImg(lines[++i]);
+
+                if (lines[i] == "AwayTeamLogo")
+                    AwayTeamLogo = new ImgInImg(lines[++i]);
+
+                if (lines[i] == "MshlLogo")
+                    MshlLogo = new ImgInImg(lines[++i]);
+
+                ++i;
+            }
+            return i;
+        }
+
+        public void SaveImage()
+        {
+            Image bitmap = Image.FromFile("images\\blanks\\game.jpg");
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                var h = GetInscribed(HomeTeamLogo.Position, HomeTeamLogo.Image.Size);
+                var a = GetInscribed(AwayTeamLogo.Position, AwayTeamLogo.Image.Size);
+                var m = GetInscribed(MshlLogo.Position, MshlLogo.Image.Size);
+
+
+                g.DrawImage(HomeTeamLogo.Image, h);
+                g.DrawRectangle(Pens.Red, h);
+                g.DrawImage(AwayTeamLogo.Image, a);
+                g.DrawRectangle(Pens.Red, a);
+
+                g.DrawImage(MshlLogo.Image, m);
+                g.DrawRectangle(Pens.Red, m);
+
+                g.DrawString(Division.Text, Division.Font, Division.Gradient, Division.Position, Division.StrFormatting);
+                g.DrawString("MSHLIVE.RU", Mshl.Font, Mshl.Gradient, Mshl.Position, Mshl.StrFormatting);
+
+                g.DrawString(HomeTeam.Text, HomeTeam.Font, HomeTeam.Gradient, HomeTeam.Position, HomeTeam.StrFormatting);
+                g.DrawString(AwayTeam.Text, AwayTeam.Font, AwayTeam.Gradient, AwayTeam.Position, AwayTeam.StrFormatting);
+                g.DrawString(Score.Text, Score.Font, Score.Gradient, Score.Position, Score.StrFormatting);
+                g.DrawString(ScorePeriods.Text, ScorePeriods.Font, ScorePeriods.Gradient, ScorePeriods.Position, ScorePeriods.StrFormatting);
+                g.DrawString(Date.Text, Date.Font, Date.Gradient, Date.Position, Date.StrFormatting);
+
+                g.DrawRectangle(Pens.Red, Division.Position);
+                g.DrawRectangle(Pens.Red, AwayTeam.Position);
+                g.DrawRectangle(Pens.Red, Score.Position);
+                g.DrawRectangle(Pens.Red, ScorePeriods.Position);
+                g.DrawRectangle(Pens.Red, Date.Position);
+                g.DrawRectangle(Pens.Red, Mshl.Position);
+
+
+
+            }
+
+            var file = $"images\\complete\\res{HomeTeam.Text}-{AwayTeam.Text}.jpg";
+
+            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+            EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L);
+            myEncoderParameters.Param[0] = myEncoderParameter;
+
+            ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+
+            bitmap.Save(file, jpgEncoder, myEncoderParameters);
+        }
+
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private static Rectangle GetInscribed(Rectangle baseRect, Size inputsize)
+        {
+            Rectangle resRect = baseRect;
+
+            //соотношение сторон
+            float ratio = inputsize.Width / (float)inputsize.Height;
+
+            int height = baseRect.Height;
+            int width = (int)(height * ratio);
+
+            if (width > baseRect.Width)
+            {
+                width = baseRect.Width;
+                height = (int)(width / ratio);
+            }
+
+            var x = baseRect.X + baseRect.Width / 2 - width / 2;
+            var y = baseRect.Y + baseRect.Height / 2 - height / 2;
+
+            resRect = new Rectangle(x, y, width, height);
+
+            return resRect;
+        }
     }
 }

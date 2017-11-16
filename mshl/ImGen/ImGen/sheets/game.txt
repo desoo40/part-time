@@ -1,0 +1,154 @@
+Images
+HomeTeamLogo
+102, 366, 500, 500
+AwayTeamLogo
+1315, 366, 500, 500
+MshlLogo
+106, 8, 209, 209
++
+Texts
+Division
+Position
+457, 56, 1001, 170
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+120
+Font style
+Bold
+Gradient
+212, 237, 255, 190, 208, 228
+Formatting
+center
+*
+Date
+Position
+724, 864, 480, 110
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+100, 100, 100, 100, 100, 100
+Formatting
+center
+*
+ScorePeriods
+Position
+557, 296, 752, 74
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+225, 202, 76, 225, 202, 76
+Formatting
+center
+*
+Score
+Position
+609, 513, 709, 209
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+150
+Font style
+Bold
+Gradient
+225, 202, 76, 225, 202, 76
+Formatting
+center
+*
+HomeTeam
+Position
+31, 850, 478, 74
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+100, 100, 100, 100, 100, 100
+Formatting
+center
+*
+AwayTeam
+Position
+1325, 850, 478, 74
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+100, 100, 100, 100, 100, 100
+Formatting
+center
+*
+HomeLower
+Position
+445, 25, 300, 50
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+100, 100, 100, 100, 100, 100
+Formatting
+center
+*
+AwayLower
+Position
+445, 25, 300, 50
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+52
+Font style
+Bold
+Gradient
+100, 100, 100, 100, 100, 100
+Formatting
+center
+*
+Mshl
+Position
+1515, 105, 389, 56
+Repeatability
+-
+Font
+fonts/seguisbi.ttf
+Font size
+40
+Font style
+Bold
+Gradient
+35, 147, 164, 35, 147, 164
+Formatting
+center
+*
++
