@@ -55,16 +55,20 @@ namespace ImGen
                 Image hometeam = Image.FromFile($"logos\\{game.HomeTeam}1.png");
                 Image awayteam = Image.FromFile($"logos\\{game.AwayTeam}.png");
 
-                Console.WriteLine(bitmap.Size.Height + "  " + bitmap.Size.Width);
-                Console.WriteLine(hometeam.Size.Height + "  " + hometeam.Size.Width);
-                Console.WriteLine(awayteam.Size.Height + "  " + awayteam.Size.Width);
+                //Console.WriteLine(bitmap.Size.Height + "  " + bitmap.Size.Width);
+                //Console.WriteLine(hometeam.Size.Height + "  " + hometeam.Size.Width);
+                //Console.WriteLine(awayteam.Size.Height + "  " + awayteam.Size.Width);
 
 
-                Console.Read();
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.DrawString(game.Division.ToUpper(), div, linGrBrush,500, 60);
-                g.DrawImage(hometeam, 106, 366);
-                g.DrawImage(awayteam, 1315, 366);
+                //Console.Read();
+                g.DrawRectangle(Pens.Red, 106, 8, 209, 209);
+                g.DrawRectangle(Pens.Red, 457, 56, 1001, 170);
+                g.DrawRectangle(Pens.Red, 1315, 366, 500, 500);
+                g.DrawRectangle(Pens.Red, 102, 366, 500, 500);
+                g.DrawRectangle(Pens.Red, 609, 513, 709, 207);
+                g.DrawRectangle(Pens.Red, 577, 296, 752, 74);
+                g.DrawRectangle(Pens.Red, 1515, 105, 389, 56);
+
 
 
             }
