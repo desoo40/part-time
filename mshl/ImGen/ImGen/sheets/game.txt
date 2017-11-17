@@ -9,141 +9,141 @@ MshlLogo
 Texts
 Division
 Position
-457, 56, 1001, 170
+450, 40, 1020, 150
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-120
+140
 Font style
 Bold
 Gradient
-212, 237, 255, 190, 208, 228
+190, 208, 228, 212, 237, 255
 Formatting
 center
 *
 Date
 Position
-724, 864, 480, 110
+724, 980, 480, 100
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+100
 Font style
 Bold
 Gradient
-100, 100, 100, 100, 100, 100
+214,216,218, 245,245,245
 Formatting
 center
 *
 ScorePeriods
 Position
-557, 296, 752, 74
+600, 260, 720, 80
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+80
 Font style
 Bold
 Gradient
-225, 202, 76, 225, 202, 76
+220, 221, 1, 251, 249, 18
 Formatting
 center
 *
 Score
 Position
-609, 513, 709, 209
+609, 366, 709, 500
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-150
+240
 Font style
 Bold
 Gradient
-225, 202, 76, 225, 202, 76
+220, 221, 1, 251, 249, 18
 Formatting
 center
 *
 HomeTeam
 Position
-31, 850, 478, 74
+30, 900, 644, 85
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+90
 Font style
 Bold
 Gradient
-100, 100, 100, 100, 100, 100
+220,237,245, 255, 255, 255
 Formatting
 center
 *
 AwayTeam
 Position
-1325, 850, 478, 74
+1253, 900, 644, 85
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+90
 Font style
 Bold
 Gradient
-100, 100, 100, 100, 100, 100
+220,237,245, 255, 255, 255
 Formatting
 center
 *
 HomeLower
 Position
-445, 25, 300, 50
+60, 985, 584, 40
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+35
 Font style
 Bold
 Gradient
-100, 100, 100, 100, 100, 100
+220,237,245, 255, 255, 255
 Formatting
 center
 *
 AwayLower
 Position
-445, 25, 300, 50
+1283, 985, 584, 40
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-52
+35
 Font style
 Bold
 Gradient
-100, 100, 100, 100, 100, 100
+220,237,245, 255, 255, 255
 Formatting
 center
 *
 Mshl
 Position
-1515, 105, 389, 56
+1515, 80, 389, 80
 Repeatability
 -
 Font
 fonts/seguisbi.ttf
 Font size
-40
+50
 Font style
 Bold
 Gradient

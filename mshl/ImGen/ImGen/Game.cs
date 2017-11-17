@@ -28,43 +28,41 @@ namespace ImGen
 
 
 
-        public Game(string[] l, int i)
+        public Game(string s)
         {
             FillSheet("sheets\\game.txt");
-            FillData(l, i);
+            FillData(s);
         }
 
-        private void FillData(string[] lines, int i)
+        private void FillData(string s)
         {
-            while (lines[i] != "*")
-            {
-                if (lines[i] == "Дивизион")
-                    Division.Text = lines[++i].ToUpper(); 
+            var pars = s.Split(';');
 
-                if (lines[i] == "Команды")
-                {
-                    
-                    var teams = lines[++i].Replace(" ", "").Split('-');
+            Date.Text = pars[0];
+            FillTeams(pars[1]);
+            Division.Text = pars[2];
+            ScorePeriods.Text = pars[3].Replace("\t", " ");
+            Score.Text = pars[4];
+        }
 
-                    HomeTeam.Text = teams[0].ToUpper();
-                    AwayTeam.Text = teams[1].ToUpper();
-                    HomeTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[0].ToLower()}.png");
-                    AwayTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[1].ToLower()}.png");
-                    MshlLogo.Image = Image.FromFile("images\\logos\\мсхл.png");
+        private void FillTeams(string s)
+        {
+            var teams = s.Replace(" ", "").Split('-');
 
-                }
+            TextHelper th = new TextHelper();
 
-                if (lines[i] == "Периоды")
-                    ScorePeriods.Text = lines[++i].ToUpper(); 
+            var namedByHt = th.FindNamedBy(teams[0]);
+            HomeTeam.Text = namedByHt[0];
+            HomeLower.Text = namedByHt[1];
 
-                if (lines[i] == "Счет")
-                    Score.Text = lines[++i].ToUpper(); 
+            var namedByAt = th.FindNamedBy(teams[1]);
+            AwayTeam.Text = namedByAt[0];
+            AwayLower.Text = namedByAt[1];
 
-                if (lines[i] == "Дата")
-                    Date.Text = lines[++i].ToUpper(); 
 
-                ++i;
-            }
+            HomeTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[0].ToLower()}.png");
+            AwayTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[1].ToLower()}.png");
+            MshlLogo.Image = Image.FromFile("images\\logos\\мсхл.png");
         }
 
         private void FillSheet(string sheetsGameTxt)
@@ -149,6 +147,10 @@ namespace ImGen
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
+
+                
+
+
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
@@ -158,35 +160,38 @@ namespace ImGen
 
 
                 g.DrawImage(HomeTeamLogo.Image, h);
-                g.DrawRectangle(Pens.Red, h);
                 g.DrawImage(AwayTeamLogo.Image, a);
-                g.DrawRectangle(Pens.Red, a);
-
                 g.DrawImage(MshlLogo.Image, m);
-                g.DrawRectangle(Pens.Red, m);
                 
                 g.DrawString(Division.Text, Division.Font, Division.Gradient, Division.Position, Division.StrFormatting);
                 g.DrawString("MSHLIVE.RU", Mshl.Font, Mshl.Gradient, Mshl.Position, Mshl.StrFormatting);
 
                 g.DrawString(HomeTeam.Text, HomeTeam.Font, HomeTeam.Gradient, HomeTeam.Position, HomeTeam.StrFormatting);
                 g.DrawString(AwayTeam.Text, AwayTeam.Font, AwayTeam.Gradient, AwayTeam.Position, AwayTeam.StrFormatting);
+                g.DrawString(HomeLower.Text, HomeLower.Font, HomeLower.Gradient, HomeLower.Position, HomeLower.StrFormatting);
+                g.DrawString(AwayLower.Text, AwayLower.Font, AwayLower.Gradient, AwayLower.Position, AwayLower.StrFormatting);
                 g.DrawString(Score.Text, Score.Font, Score.Gradient, Score.Position, Score.StrFormatting);
                 g.DrawString(ScorePeriods.Text, ScorePeriods.Font, ScorePeriods.Gradient, ScorePeriods.Position, ScorePeriods.StrFormatting);
                 g.DrawString(Date.Text, Date.Font, Date.Gradient, Date.Position, Date.StrFormatting);
 
-                g.DrawRectangle(Pens.Red, Division.Position);
-                g.DrawRectangle(Pens.Red, AwayTeam.Position);
-                g.DrawRectangle(Pens.Red, HomeTeam.Position);
-                g.DrawRectangle(Pens.Red, Score.Position);
-                g.DrawRectangle(Pens.Red, ScorePeriods.Position);
-                g.DrawRectangle(Pens.Red, Date.Position);
-                g.DrawRectangle(Pens.Red, Mshl.Position);
+                //g.DrawRectangle(Pens.Red, Division.Position);
+                //g.DrawRectangle(Pens.Red, AwayTeam.Position);
+                //g.DrawRectangle(Pens.Red, HomeTeam.Position);
+                //g.DrawRectangle(Pens.Red, Score.Position);
+                //g.DrawRectangle(Pens.Red, ScorePeriods.Position);
+                //g.DrawRectangle(Pens.Red, Date.Position);
+                //g.DrawRectangle(Pens.Red, Mshl.Position);
+                //g.DrawRectangle(Pens.Red, h);
+                //g.DrawRectangle(Pens.Red, a);
+                //g.DrawRectangle(Pens.Red, m);
 
 
 
             }
 
-            var file = $"images\\complete\\res{HomeTeam.Text}-{AwayTeam.Text}.jpg";
+            var id = Date.Text.Replace(".","-");
+
+            var file = $"images\\complete\\{id}_{HomeTeam.Text}-{AwayTeam.Text}.jpg";
 
             EncoderParameters myEncoderParameters = new EncoderParameters(1);
             System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
