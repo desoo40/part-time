@@ -41,6 +41,24 @@ namespace ImGen
             Date.Text = pars[0];
             FillTeams(pars[1]);
             Division.Text = pars[2];
+            if (Division.Text.ToLower() == "абитуриент")
+                Division.Gradient.LinearColors = new Color[2]
+                {
+                    Color.FromArgb(192, 250, 176), Color.FromArgb(165, 216, 157)
+                };
+
+            if (Division.Text.ToLower() == "бакалавр")
+                Division.Gradient.LinearColors = new Color[2]
+                {
+                    Color.FromArgb(203, 250, 255), Color.FromArgb(175, 213, 222)
+                };
+
+            if (Division.Text.ToLower() == "магистр")
+                Division.Gradient.LinearColors = new Color[2]
+                {
+                    Color.FromArgb(190, 208, 228), Color.FromArgb(212, 237, 255)
+                };
+
             ScorePeriods.Text = pars[3].Replace("\t", " ");
             Score.Text = pars[4];
         }
