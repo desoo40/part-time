@@ -145,7 +145,7 @@ namespace ImGen
 
         public void SaveImage()
         {
-            Image bitmap = Image.FromFile("images\\blanks\\game.jpg");
+            Image bitmap = Image.FromFile("images\\blanks\\game2.jpg");
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
@@ -164,7 +164,7 @@ namespace ImGen
 
                 g.DrawImage(MshlLogo.Image, m);
                 g.DrawRectangle(Pens.Red, m);
-
+                
                 g.DrawString(Division.Text, Division.Font, Division.Gradient, Division.Position, Division.StrFormatting);
                 g.DrawString("MSHLIVE.RU", Mshl.Font, Mshl.Gradient, Mshl.Position, Mshl.StrFormatting);
 
@@ -176,6 +176,7 @@ namespace ImGen
 
                 g.DrawRectangle(Pens.Red, Division.Position);
                 g.DrawRectangle(Pens.Red, AwayTeam.Position);
+                g.DrawRectangle(Pens.Red, HomeTeam.Position);
                 g.DrawRectangle(Pens.Red, Score.Position);
                 g.DrawRectangle(Pens.Red, ScorePeriods.Position);
                 g.DrawRectangle(Pens.Red, Date.Position);

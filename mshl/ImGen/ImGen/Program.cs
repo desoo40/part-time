@@ -31,7 +31,8 @@ namespace ImGen
                 {
                     if (l[i] == "*" && ++i < l.Length)
                     {
-                      g = new Game(l, 1);
+                      g = new Game(l, i);
+                        g.SaveImage();
 
                     }
 

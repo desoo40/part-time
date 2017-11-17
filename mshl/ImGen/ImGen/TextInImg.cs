@@ -83,6 +83,9 @@ namespace ImGen
 
                         if (lines[i].ToLower() == "bold")
                             tmpFontStyle = FontStyle.Bold;
+
+                        if (lines[i].ToLower() == "italic")
+                            tmpFontStyle = FontStyle.Italic;
                     }
                 }
 
