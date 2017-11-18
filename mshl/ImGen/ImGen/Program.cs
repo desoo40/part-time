@@ -25,6 +25,7 @@ namespace ImGen
 
             if (l[0].ToLower() == "игры")
             {
+                Console.WriteLine("Это файл с играми! Начинаю обработку...");
                 for (int i = 1; i < l.Length; i++)
                 {
                     Game g = new Game(l[i]);

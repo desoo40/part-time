@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,22 +39,25 @@ namespace ImGen
         {
             var pars = s.Split(';');
 
+            Console.WriteLine($"[{DateTime.Now}] Найдена игра {pars[1]}");
+
             Date.Text = pars[0];
             FillTeams(pars[1]);
-            Division.Text = pars[2];
-            if (Division.Text.ToLower() == "абитуриент")
+            Division.Text = pars[2].ToUpper();
+            var dt = Division.Text.ToLower();
+            if (dt == "абитуриент")
                 Division.Gradient.LinearColors = new Color[2]
                 {
-                    Color.FromArgb(192, 250, 176), Color.FromArgb(165, 216, 157)
+                    Color.FromArgb(165, 216, 157), Color.FromArgb(192, 250, 176)
                 };
 
-            if (Division.Text.ToLower() == "бакалавр")
+            if (dt == "бакалавр")
                 Division.Gradient.LinearColors = new Color[2]
                 {
-                    Color.FromArgb(203, 250, 255), Color.FromArgb(175, 213, 222)
+                    Color.FromArgb(175, 213, 222), Color.FromArgb(203, 250, 255)
                 };
 
-            if (Division.Text.ToLower() == "магистр")
+            if (dt == "магистр")
                 Division.Gradient.LinearColors = new Color[2]
                 {
                     Color.FromArgb(190, 208, 228), Color.FromArgb(212, 237, 255)
@@ -77,14 +81,38 @@ namespace ImGen
             AwayTeam.Text = namedByAt[0];
             AwayLower.Text = namedByAt[1];
 
+            if (!File.Exists($"images\\logos\\{teams[0].ToLower()}.png"))
+            {
+                Console.WriteLine($"[Ошибка] Не найден логотип для комнды images\\logos\\{teams[0].ToLower()}.png");
+                return;
+            }
+
+            if (!File.Exists($"images\\logos\\{teams[1].ToLower()}.png"))
+            {
+                Console.WriteLine($"[Ошибка] Не найден логотип для комнды images\\logos\\{ teams[1].ToLower()}.png");
+                return;
+            }
 
             HomeTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[0].ToLower()}.png");
             AwayTeamLogo.Image = Image.FromFile($"images\\logos\\{teams[1].ToLower()}.png");
+
+            if (!File.Exists($"images\\logos\\мсхл.png"))
+            {
+                Console.WriteLine($"[Ошибка] Потерялся логотип МСХЛ(((( images\\logos\\мсхл.png");
+                return;
+            }
+
             MshlLogo.Image = Image.FromFile("images\\logos\\мсхл.png");
         }
 
         private void FillSheet(string sheetsGameTxt)
         {
+            if (!File.Exists(sheetsGameTxt))
+            {
+                Console.WriteLine("Не могу найти файл с разметкой =(. Сделайте что-нибудь!");
+                return;
+            }
+
             var sheetList = File.ReadAllLines(sheetsGameTxt);
 
             if (sheetList.Length == 0)
@@ -170,6 +198,7 @@ namespace ImGen
 
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.TextRenderingHint = TextRenderingHint.AntiAlias;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 var h = GetInscribed(HomeTeamLogo.Position, HomeTeamLogo.Image.Size);
@@ -210,7 +239,7 @@ namespace ImGen
             var id = Date.Text.Replace(".","-");
 
             var file = $"images\\complete\\{id}_{HomeTeam.Text}-{AwayTeam.Text}.jpg";
-
+            
             EncoderParameters myEncoderParameters = new EncoderParameters(1);
             System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
             EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L);
