@@ -237,7 +237,7 @@ namespace ImGen
             }
 
             var id = Date.Text.Replace(".","-");
-
+            
             var file = $"images\\complete\\{id}_{HomeTeam.Text}-{AwayTeam.Text}.jpg";
             
             EncoderParameters myEncoderParameters = new EncoderParameters(1);
