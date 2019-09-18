@@ -1,0 +1,52 @@
+Sub Lab3()
+
+frmLab3.Show
+
+Dim Arr(20, 10) As Long, i As Long, j As Long
+Dim Sum As Long, MaxSum As Long, IndMax As Long
+
+For i = 1 To 20
+    For j = 1 To 10
+        Arr(i, j) = 1100 * Rnd - 1000
+        Cells(i, j) = Arr(i, j)
+    Next j
+Next i
+
+Sum = 0
+MaxSum = 0
+IndMax = -1
+
+For j = 1 To 10
+    For i = 1 To 20
+        If Arr(i, j) > 0 Then
+            Sum = Sum + Arr(i, j)
+        End If
+    Next i
+    
+    If Sum > MaxSum Then
+        MaxSum = Sum
+        IndMax = j
+    End If
+    
+    Sum = 0
+Next j
+
+Cells(1, 12) = "Ñòîëáåö ñ ìàêñèìàëüíîé ñóììîé ïîëîæèòåëüíûõ ýëåìåíòîâ:"
+
+If IndMax = -1 Then
+    Cells(2, 12) = "Íåò ïîëîæèòåëüíûõ ÷èñåë"
+Else
+    Cells(2, 12) = IndMax
+End If
+    
+Cells(3, 12) = "Ñàì ñòîëáåö:"
+
+If IndMax = -1 Then
+    Cells(4, 12) = "è ñòîëáöà íåò"
+Else
+    For i = 1 To 20
+        Cells(i + 3, 12) = Arr(i, IndMax)
+    Next i
+End If
+
+End Sub

@@ -1,8 +1,8 @@
 Images
 HomeTeamLogo
-102, 366, 500, 500
+102, 266, 500, 500
 AwayTeamLogo
-1315, 366, 500, 500
+1315, 266, 500, 500
 MshlLogo
 106, 8, 209, 209
 +
@@ -31,7 +31,7 @@ Repeatability
 Font
 fonts/seguisbi.ttf
 Font size
-100
+120
 Font style
 Bold
 Gradient
@@ -73,7 +73,7 @@ center
 *
 HomeTeam
 Position
-30, 900, 644, 85
+30, 800, 644, 85
 Repeatability
 -
 Font
@@ -89,7 +89,7 @@ center
 *
 AwayTeam
 Position
-1253, 900, 644, 85
+1253, 800, 644, 85
 Repeatability
 -
 Font
@@ -105,7 +105,7 @@ center
 *
 HomeLower
 Position
-60, 985, 584, 40
+60, 885, 584, 40
 Repeatability
 -
 Font
@@ -121,7 +121,7 @@ center
 *
 AwayLower
 Position
-1283, 985, 584, 40
+1283, 885, 584, 40
 Repeatability
 -
 Font

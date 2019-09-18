@@ -27,10 +27,13 @@ namespace ImGen
         public TextInImg AwayLower { get; set; }
         public TextInImg Mshl { get; set; }
 
+        bool IsDataFilled = false;
+        bool IsDataLogos = false;
+        string _nowDate;
 
-
-        public Game(string s)
+        public Game(string s, string dt)
         {
+            _nowDate = dt;
             FillSheet("sheets\\game.txt");
             FillData(s);
         }
@@ -38,6 +41,13 @@ namespace ImGen
         private void FillData(string s)
         {
             var pars = s.Split(';');
+
+            if (pars.Length != 5)
+            {
+                Console.WriteLine($"[ОШИБКА] Проблемы со строкой \"{s}\"\n" +
+                                  $"Все точки с запятой на месте?");
+                return;
+            }
 
             Console.WriteLine($"[{DateTime.Now}] Найдена игра {pars[1]}");
 
@@ -65,6 +75,7 @@ namespace ImGen
 
             ScorePeriods.Text = pars[3].Replace("\t", " ");
             Score.Text = pars[4];
+            IsDataFilled = true;
         }
 
         private void FillTeams(string s)
@@ -98,18 +109,20 @@ namespace ImGen
 
             if (!File.Exists($"images\\logos\\мсхл.png"))
             {
-                Console.WriteLine($"[Ошибка] Потерялся логотип МСХЛ(((( images\\logos\\мсхл.png");
+                Console.WriteLine("[Ошибка] Потерялся логотип МСХЛ(((( images\\logos\\мсхл.png");
                 return;
             }
 
             MshlLogo.Image = Image.FromFile("images\\logos\\мсхл.png");
+
+            IsDataLogos = true;
         }
 
         private void FillSheet(string sheetsGameTxt)
         {
             if (!File.Exists(sheetsGameTxt))
             {
-                Console.WriteLine("Не могу найти файл с разметкой =(. Сделайте что-нибудь!");
+                Console.WriteLine("[Ошибка] Не могу найти файл с разметкой =(. Сделайте что-нибудь!");
                 return;
             }
 
@@ -189,18 +202,26 @@ namespace ImGen
 
         public void SaveImage()
         {
-            Image bitmap = Image.FromFile("images\\blanks\\game2.jpg");
+            if (!IsDataFilled)
+                return;
+
+            if (!IsDataLogos)
+                return;
+
+            if (!File.Exists("images\\blanks\\game.jpg"))
+            {
+                Console.WriteLine("[Ошибка] Потерялся фон( images\\logos\\game.jpg");
+                return;
+            }
+
+            Image bitmap = Image.FromFile("images\\blanks\\game.jpg");
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-
-                
-
-
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.TextRenderingHint = TextRenderingHint.AntiAlias;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
+               
                 var h = GetInscribed(HomeTeamLogo.Position, HomeTeamLogo.Image.Size);
                 var a = GetInscribed(AwayTeamLogo.Position, AwayTeamLogo.Image.Size);
                 var m = GetInscribed(MshlLogo.Position, MshlLogo.Image.Size);
@@ -231,14 +252,18 @@ namespace ImGen
                 //g.DrawRectangle(Pens.Red, h);
                 //g.DrawRectangle(Pens.Red, a);
                 //g.DrawRectangle(Pens.Red, m);
-
-
-
             }
 
-            var id = Date.Text.Replace(".","-");
-            
-            var file = $"images\\complete\\{id}_{HomeTeam.Text}-{AwayTeam.Text}.jpg";
+            var idArr = Date.Text.Split('.');
+
+            var id = idArr[2] + "-" + idArr[1] + "-" + idArr[0];
+
+            var now = _nowDate;
+
+            if (!Directory.Exists($"ЭКСПОРТ\\{now}"))
+                Directory.CreateDirectory($"ЭКСПОРТ\\{now}");
+
+            var file = $"ЭКСПОРТ\\{now}\\{id}_{HomeTeam.Text}-{AwayTeam.Text}.jpg";
             
             EncoderParameters myEncoderParameters = new EncoderParameters(1);
             System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
@@ -248,6 +273,7 @@ namespace ImGen
             ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
 
             bitmap.Save(file, jpgEncoder, myEncoderParameters);
+            Console.WriteLine($"[{DateTime.Now}] Сохранил!\n");
         }
 
         private static ImageCodecInfo GetEncoder(ImageFormat format)
